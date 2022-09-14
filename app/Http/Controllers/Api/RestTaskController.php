@@ -37,10 +37,12 @@ class RestTaskController extends Controller
         $tr_task = new TaskTransaction();
         $tr_task->user_id = $user->id;
         $tr_task->task_id = $task->id;
-        $tr_task->save();
+        $result = $tr_task->save();
 
-
-        return;
-        ResponseFormatter::success($request->segment(3), null, "Task Created", 200,);
+        if ($result) {
+            return ResponseFormatter::success($request->segment(3), null, "Task Created", 200,);
+        } else {
+            return ResponseFormatter::error($request->segment(3), null, "Error Occured!", 400, "Bad Request");
+        }
     }
 }

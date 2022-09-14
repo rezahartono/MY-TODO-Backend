@@ -25,18 +25,18 @@ Route::controller(LayoutController::class)->group(function () {
 
 Route::controller(AuthenticationController::class)->group(function () {
     Route::post('/login', 'doLogin');
+    Route::get('/logout', 'doLogout');
 });
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth', 'isadmin')->group(function () {
     Route::controller(LayoutController::class)->group(function () {
         Route::get('/dashboard', 'dashboardView');
         Route::get('/users', 'usersView');
+        Route::get('/tasks', 'tasksView');
+        Route::get('/tasks/{id}', 'editTaskView');
 
         Route::prefix('/master-data')->group(function () {
             Route::get('/states', 'statesView');
         });
-    });
-    Route::controller(AuthenticationController::class)->group(function () {
-        Route::get('/logout', 'doLogout');
     });
 });

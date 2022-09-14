@@ -12,7 +12,7 @@
 
                         <div class="info-box-content">
                             <span class="info-box-text">Daily Task</span>
-                            <span class="info-box-number">10</span>
+                            <span class="info-box-number">{{ $count['daily_tasks'] }}</span>
                         </div>
                         <!-- /.info-box-content -->
                     </div>
@@ -25,7 +25,7 @@
 
                         <div class="info-box-content">
                             <span class="info-box-text">Weekly Task</span>
-                            <span class="info-box-number">41,410</span>
+                            <span class="info-box-number">{{ $count['weekly_tasks'] }}</span>
                         </div>
                         <!-- /.info-box-content -->
                     </div>
@@ -42,7 +42,7 @@
 
                         <div class="info-box-content">
                             <span class="info-box-text">Total Task</span>
-                            <span class="info-box-number">760</span>
+                            <span class="info-box-number">{{ $count['total_tasks'] }}</span>
                         </div>
                         <!-- /.info-box-content -->
                     </div>

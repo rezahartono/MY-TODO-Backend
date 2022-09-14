@@ -4,7 +4,6 @@ namespace App\Http\Controllers\api;
 
 use App\Helpers\ResponseFormatter;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\RestRegisterRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -46,8 +45,21 @@ class RestAuthController extends Controller
         return ResponseFormatter::success($request->segment(3), $data, "Authorized", 200);
     }
 
-    public function doRegister(RestRegisterRequest $request)
+    public function doRegister(Request $request)
     {
+        //set validation
+        $validator = Validator::make($request->all(), [
+            'name' => ['required', 'max:255'],
+            'email' => ['required', 'max:150', 'email', 'unique:users,email'],
+            'password' => ['required', 'max:150'],
+        ]);
+
+        //if validation fails
+        if ($validator->fails()) {
+            return
+                ResponseFormatter::error($request->segment(3), $validator->errors(), $validator->errors(), 400, "Bad Request");
+        }
+
         $user = new User();
         $user->name = $request->name;
         $user->email = $request->email;

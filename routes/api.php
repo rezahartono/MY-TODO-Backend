@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\RestAuthController;
 use App\Http\Controllers\Api\RestMasterDataController;
+use App\Http\Controllers\Api\RestSubTaskController;
 use App\Http\Controllers\Api\RestTaskController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -31,6 +32,9 @@ Route::prefix('/v1')->group(function () {
     Route::middleware('api')->group(function () {
         Route::controller(RestTaskController::class)->group(function () {
             Route::post('/create-task', 'create');
+        });
+        Route::controller(RestSubTaskController::class)->group(function () {
+            Route::post('/create-sub-task', 'create');
         });
         Route::controller(RestMasterDataController::class)->group(function () {
             Route::get('/states', 'getStates');

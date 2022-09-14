@@ -36,7 +36,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="/users" class="nav-link @if ($title == 'Tasks') active @endif">
+                        <a href="/tasks" class="nav-link @if ($title == 'Tasks') active @endif">
                             <i class="nav-icon fas fa-tasks"></i>
                             <p>Tasks</p>
                         </a>
