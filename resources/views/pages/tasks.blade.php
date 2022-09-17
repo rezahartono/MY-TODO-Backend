@@ -21,10 +21,10 @@
                                 <table class="table table-bordered tasks_datatable">
                                     <thead>
                                         <tr>
-                                            <th>No</th>
+                                            <th class="text-center">No</th>
                                             <th>Task Number</th>
                                             <th>Title</th>
-                                            <th width="100px">Action</th>
+                                            <th width="100px" class="text-center">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody></tbody>

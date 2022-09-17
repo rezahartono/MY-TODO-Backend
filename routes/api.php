@@ -32,9 +32,13 @@ Route::prefix('/v1')->group(function () {
     Route::middleware('api')->group(function () {
         Route::controller(RestTaskController::class)->group(function () {
             Route::post('/create-task', 'create');
+            Route::put('/update-task', 'update');
+            Route::delete('/delete-task', 'delete');
         });
         Route::controller(RestSubTaskController::class)->group(function () {
             Route::post('/create-sub-task', 'create');
+            Route::put('/update-sub-task', 'update');
+            Route::delete('/delete-sub-task', 'delete');
         });
         Route::controller(RestMasterDataController::class)->group(function () {
             Route::get('/states', 'getStates');

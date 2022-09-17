@@ -15,6 +15,10 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
+                        <div class="card-header">
+                            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                                data-target="#create-state-modal"><i class="fas fa-plus"></i> Create</button>
+                        </div>
                         <!-- /.card-header -->
                         <div class="card-body">
                             <div class="col-12 table-responsive">
@@ -23,7 +27,7 @@
                                         <tr>
                                             <th>No</th>
                                             <th>Name</th>
-                                            {{-- <th width="100px">Action</th> --}}
+                                            <th width="10%">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody></tbody>
@@ -38,6 +42,8 @@
         </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
+
+    @include('components.modals.create_state_modal')
 @endsection
 
 @push('scripts')
@@ -62,6 +68,10 @@
                     {
                         data: 'name',
                         name: 'name'
+                    },
+                    {
+                        data: 'action',
+                        name: 'action'
                     },
                 ],
                 "columnDefs": [{

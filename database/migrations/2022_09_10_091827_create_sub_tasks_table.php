@@ -16,9 +16,11 @@ return new class extends Migration
         Schema::create('sub_tasks', function (Blueprint $table) {
             $table->id();
             $table->string('description', 255);
+            $table->bigInteger('task_id')->nullable();
             $table->bigInteger('state_id')->nullable();
             $table->timestamp('start_at')->useCurrent();
             $table->timestamp('end_at')->nullable();
+            $table->bigInteger('created_by');
             $table->timestamps();
         });
     }

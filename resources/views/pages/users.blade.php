@@ -21,11 +21,11 @@
                                 <table class="table table-bordered user_datatable">
                                     <thead>
                                         <tr>
-                                            <th>No</th>
-                                            <th>Name</th>
-                                            <th>Email</th>
-                                            <th>Role</th>
-                                            <th width="100px">Action</th>
+                                            <th class="text-center">No</th>
+                                            <th class="text-center">Name</th>
+                                            <th class="text-center">Email</th>
+                                            <th class="text-center">Role</th>
+                                            <th width="100px" class="text-center">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody></tbody>
@@ -87,7 +87,11 @@
                     "searchable": true,
                     "orderable": true,
                     "targets": 1
-                }],
+                }, {
+                    "searchable": false,
+                    "orderable": false,
+                    "targets": 4
+                }, ],
                 /// sort at column three
                 "order": [
                     [1, 'asc']

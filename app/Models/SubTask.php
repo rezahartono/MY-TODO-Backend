@@ -16,6 +16,9 @@ class SubTask extends Model
      */
     protected $fillable = [
         'description',
+        'task_id',
+        'state_id',
+        'created_by',
     ];
 
     /**
@@ -31,6 +34,11 @@ class SubTask extends Model
 
     public function state()
     {
-        return $this->hashOne(State::class);
+        return $this->belongsTo(State::class, 'state_id', 'id');
+    }
+
+    public function createdBy()
+    {
+        return $this->belongsTo(User::class, 'created_by', 'id');
     }
 }

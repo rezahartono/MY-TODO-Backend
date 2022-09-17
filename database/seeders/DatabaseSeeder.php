@@ -29,6 +29,15 @@ class DatabaseSeeder extends Seeder
             'role' => 'admin',
         ]);
 
+        User::factory()->create([
+            'name' => 'User 1',
+            'email' => 'user1@my-todo.dev',
+            'password' => Hash::make('user1'),
+            'email_verified_at' => Date::now(),
+            'role' => 'user',
+        ]);
+
+
         State::create([
             'name' => 'Draft'
         ]);

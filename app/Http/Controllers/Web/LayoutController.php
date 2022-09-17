@@ -7,6 +7,7 @@ use App\DataTables\UserDatatable;
 use App\Http\Controllers\Controller;
 use App\Models\State;
 use App\Models\Task;
+use App\Models\TaskTransaction;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -33,10 +34,18 @@ class LayoutController extends Controller
             'total_users' => User::get()->count(),
         ];
 
+        $tasks =
+            Task::with(['subTasks.state'])->whereDate('created_at', Carbon::today())->paginate(5);
+        $allowedState = State::whereIn('name', ['Completed', 'Closed'])->get();
+        // $subTask = $task->subTasks->whereIn('state_id', [$allowedState[0]->id, $allowedState[1]->id])->count();
+        // $percentage = ($subTask * 100) / $task->subTasks->count();
+
         $data = [
             'title' => 'Dashboard',
             'user' => Auth::user(),
             'count' => $count,
+            'tasks' => $tasks,
+            'allowedState' => $allowedState
         ];
 
         return view('pages.dashboard', $data);
@@ -68,6 +77,15 @@ class LayoutController extends Controller
             $data = State::select()->get();
             return Datatables::of($data)
                 ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $btn = '<form action="/master-data/states/' . $row->id . '" method="post">
+                    ' . csrf_field() . '
+                    ' . method_field("DELETE") . '
+                    <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i> Delete</button>
+                    </form>';
+                    return $btn;
+                })
+                ->rawColumns(['action'])
                 ->make(true);
         }
 
@@ -99,14 +117,35 @@ class LayoutController extends Controller
         return view('pages.tasks', $viewData);
     }
 
-    public function editTaskView($id)
+    public function editTaskView(Request $request, $id)
     {
-        $task = Task::where('id', $id)->get();
+        $task =
+            Task::with(['subTasks.state'])->where('id', '=', $id)->get()->first();
+
+        if ($task == null) {
+            return abort(404);
+        }
+
+        if ($request->ajax()) {
+            $data =
+                Task::with(['subTasks.state'])->where('id', '=', $id)->get()->first();
+            return Datatables::of($data->subTasks)
+                ->make(true);
+        }
+
+        $allowedState = State::whereIn('name', ['Completed', 'Closed'])->get();
+
+        $subTask = $task->subTasks->whereIn('state_id', [$allowedState[0]->id, $allowedState[1]->id])->count();
+        $percentage = ($subTask * 100) / $task->subTasks->count();
+
+
         $viewData = [
             'title' => 'Tasks',
             'user' => Auth::user(),
             'task' => $task,
+            'percentage' => $percentage,
         ];
         return view('pages.show_task', $viewData);
+        // return response()->json($percentage);
     }
 }

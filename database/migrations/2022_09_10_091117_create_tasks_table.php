@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('number', 150);
             $table->string('title', 150);
+            $table->bigInteger('created_by');
             $table->timestamp('start_at')->useCurrent();
             $table->timestamp('end_at')->nullable();
             $table->timestamps();

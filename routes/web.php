@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Web\AuthenticationController;
 use App\Http\Controllers\Web\LayoutController;
+use App\Http\Controllers\Web\MasterDataController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -37,6 +38,12 @@ Route::middleware('auth', 'isadmin')->group(function () {
 
         Route::prefix('/master-data')->group(function () {
             Route::get('/states', 'statesView');
+        });
+    });
+    Route::controller(MasterDataController::class)->group(function () {
+        Route::prefix('/master-data')->group(function () {
+            Route::post('/states', 'createState');
+            Route::delete('/states/{id}', 'deleteState');
         });
     });
 });

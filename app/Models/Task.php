@@ -17,6 +17,7 @@ class Task extends Model
     protected $fillable = [
         'number',
         'title',
+        'created_by',
     ];
 
     /**
@@ -28,4 +29,13 @@ class Task extends Model
         'start_at' => 'datetime',
         'end_at' => 'datetime',
     ];
+
+    public function subTasks()
+    {
+        return $this->hasMany(SubTask::class, 'task_id', 'id');
+    }
+
+    public function createdBy(){
+        return $this->belongsTo(User::class, 'created_by', 'id');
+    }
 }
